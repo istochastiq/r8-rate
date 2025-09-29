@@ -1,7 +1,6 @@
+'use client';
 import Link from 'next/link';
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import { useEffect, useState } from 'react';
 
 function Breadcrumbs() {
   return (
@@ -15,27 +14,53 @@ function Breadcrumbs() {
   );
 }
 
-export default async function Page() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const res = await fetch(`${url}/rest/v1/influencers?select=*&order=created_at.desc`, {
-    headers: {
-      apikey: anon,
-      Authorization: `Bearer ${anon}`
-    },
-    cache: 'no-store'
-  });
+export default function Page() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!res.ok) {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        const res = await fetch(`${url}/rest/v1/influencers?select=*&order=created_at.desc`, {
+          headers: {
+            apikey: anon,
+            Authorization: `Bearer ${anon}`
+          }
+        });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        const result = await res.json();
+        setData(result);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (loading) {
     return (
-      <main style={{ padding: 24 }}>
+      <main>
         <Breadcrumbs />
-        <h1>Influencers</h1>
-        <p style={{ color: 'crimson' }}>Error: {res.status} {res.statusText}</p>
+        <h1 className="text-2xl font-semibold mb-4">Influencers</h1>
+        <div className="text-gray-500">Loading...</div>
       </main>
     );
   }
-  const data = await res.json();
+
+  if (error) {
+    return (
+      <main>
+        <Breadcrumbs />
+        <h1 className="text-2xl font-semibold mb-4">Influencers</h1>
+        <p className="text-red-600">Error: {error}</p>
+      </main>
+    );
+  }
 
   return (
     <main>

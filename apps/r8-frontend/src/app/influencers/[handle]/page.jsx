@@ -1,7 +1,6 @@
+'use client';
 import Link from 'next/link';
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import { useEffect, useState } from 'react';
 
 function Breadcrumbs({ handle }) {
   return (
@@ -17,34 +16,67 @@ function Breadcrumbs({ handle }) {
   );
 }
 
-export default async function Page({ params }) {
-  const { handle } = await params;
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const res = await fetch(`${url}/rest/v1/influencers?select=*&twitter_handle=eq.${encodeURIComponent(handle)}&limit=1`, {
-    headers: {
-      apikey: anon,
-      Authorization: `Bearer ${anon}`
-    },
-    cache: 'no-store'
-  });
+export default function Page({ params }) {
+  const [handle, setHandle] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!res.ok) {
+  useEffect(() => {
+    async function resolveParams() {
+      const resolvedParams = await params;
+      setHandle(resolvedParams.handle);
+    }
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!handle) return;
+    async function fetchData() {
+      try {
+        const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        const res = await fetch(`${url}/rest/v1/influencers?select=*&twitter_handle=eq.${encodeURIComponent(handle)}&limit=1`, {
+          headers: {
+            apikey: anon,
+            Authorization: `Bearer ${anon}`
+          }
+        });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        const rows = await res.json();
+        setData(rows?.[0] || null);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [handle]);
+
+  if (!handle || loading) {
     return (
-      <main style={{ padding: 24 }}>
-        <Breadcrumbs handle={handle} />
-        <h1>Influencer</h1>
-        <p style={{ color: 'crimson' }}>Error: {res.status} {res.statusText}</p>
+      <main>
+        <div className="text-gray-500">Loading...</div>
       </main>
     );
   }
-  const rows = await res.json();
-  const data = rows?.[0];
+
+  if (error) {
+    return (
+      <main>
+        <Breadcrumbs handle={handle} />
+        <h1 className="text-2xl font-semibold">Influencer</h1>
+        <p className="text-red-600">Error: {error}</p>
+      </main>
+    );
+  }
+
   if (!data) {
     return (
-      <main style={{ padding: 24 }}>
+      <main>
         <Breadcrumbs handle={handle} />
-        <h1>Not found</h1>
+        <h1 className="text-2xl font-semibold">Not found</h1>
         <p>Influencer @{handle} not found.</p>
       </main>
     );
