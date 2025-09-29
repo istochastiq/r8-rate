@@ -17,14 +17,25 @@ export function Providers({ children }) {
 
 export function SignInButton() {
   const { ready, authenticated, login, logout } = usePrivy();
-  if (!ready) return null;
+  const container = 'w-[110px] flex justify-end';
+  if (!ready) {
+    return (
+      <div className={container}>
+        <div className="h-9 w-[92px] rounded-md bg-gray-200 animate-pulse" />
+      </div>
+    );
+  }
   if (authenticated) {
     return (
-      <button onClick={logout} className="rounded-md bg-gray-200 px-3 py-2 text-sm">Sign out</button>
+      <div className={container}>
+        <button onClick={logout} className="h-9 rounded-md bg-gray-200 px-3 text-sm">Sign out</button>
+      </div>
     );
   }
   return (
-    <button onClick={login} className="rounded-md bg-black px-3 py-2 text-white text-sm">Sign in</button>
+    <div className={container}>
+      <button onClick={login} className="h-9 rounded-md bg-black px-3 text-white text-sm">Sign in</button>
+    </div>
   );
 }
 
