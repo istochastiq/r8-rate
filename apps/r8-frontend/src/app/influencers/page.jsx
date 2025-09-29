@@ -38,33 +38,35 @@ export default async function Page() {
   const data = await res.json();
 
   return (
-    <main style={{ padding: 24 }}>
+    <main>
       <Breadcrumbs />
-      <h1>Influencers</h1>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #e5e5e5' }}>
-              <th style={{ padding: '8px 6px' }}>Avatar</th>
-              <th style={{ padding: '8px 6px' }}>Handle</th>
-              <th style={{ padding: '8px 6px' }}>Created</th>
+      <h1 className="text-2xl font-semibold mb-4">Influencers</h1>
+      <div className="overflow-x-auto rounded-lg border border-gray-200">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-50 text-gray-600">
+            <tr>
+              <th className="px-3 py-2 text-left">Avatar</th>
+              <th className="px-3 py-2 text-left">Handle</th>
+              <th className="px-3 py-2 text-left">Created</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-100">
             {(data || []).map((row) => (
-              <tr key={row.id} style={{ borderBottom: '1px solid #f2f2f2' }}>
-                <td style={{ padding: '8px 6px' }}>
+              <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                <td className="px-3 py-2">
                   {row.twitter_profile_pic ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={row.twitter_profile_pic} alt={row.twitter_handle} width={40} height={40} style={{ borderRadius: 8, objectFit: 'cover' }} />
+                    <img src={row.twitter_profile_pic} alt={row.twitter_handle} width={40} height={40} className="rounded-md object-cover" />
                   ) : (
-                    <div style={{ width: 40, height: 40, background: '#eee', borderRadius: 8 }} />
+                    <div className="w-10 h-10 bg-gray-200 rounded-md" />
                   )}
                 </td>
-                <td style={{ padding: '8px 6px', fontWeight: 600 }}>
-                  <Link href={`/influencers/${encodeURIComponent(row.twitter_handle)}`}>@{row.twitter_handle}</Link>
+                <td className="px-3 py-2 font-medium">
+                  <Link href={`/influencers/${encodeURIComponent(row.twitter_handle)}`} className="text-blue-600 hover:underline">
+                    @{row.twitter_handle}
+                  </Link>
                 </td>
-                <td style={{ padding: '8px 6px', color: '#666' }}>
+                <td className="px-3 py-2 text-gray-500">
                   {row.created_at ? new Date(row.created_at).toLocaleString() : ''}
                 </td>
               </tr>
