@@ -1,0 +1,62 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / Logs
+node_modules/
+**/node_modules/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Rush
+common/temp/
+!common/temp/.gitkeep
+**/rush-logs/
+**/.rush/
+
+# Lockfiles at repo root (Rush manages lockfile under common/config/rush)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# TypeScript
+*.tsbuildinfo
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+coverage/
+
+# Next.js
+apps/r8-frontend/.next/
+apps/r8-frontend/out/
+apps/r8-frontend/.vercel/
+
+# Whitepaper
+apps/r8-whitepaper/dist/
+
+# Foundry (Solidity)
+apps/r8-contracts/out/
+apps/r8-contracts/cache/
+apps/r8-contracts/broadcast/
+apps/r8-contracts/lib/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# Cursor
+.cursor/
+
+

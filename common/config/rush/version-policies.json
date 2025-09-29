@@ -1,0 +1,12 @@
+[
+  {
+    "policyName": "independent",
+    "definitionName": "lockStepVersion",
+    "version": "0.1.0",
+    "nextBump": "patch",
+    "mainProject": "@r8-rate/r8-frontend",
+    "includeEmailInChangeFile": false
+  }
+]
+
+

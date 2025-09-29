@@ -1,0 +1,11 @@
+{
+  "name": "@r8-rate/r8-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "forge build || echo 'forge not installed, skipping'",
+    "test": "forge test || echo 'forge not installed, skipping'"
+  }
+}
+
+

@@ -1,0 +1,15 @@
+{
+  "name": "@r8-rate/r8-whitepaper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node --enable-source-maps scripts/build-stub.js",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "rimraf": "5.0.10"
+  }
+}
+
+

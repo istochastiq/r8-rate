@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.158.1",
+  "nodeSupportedVersionRange": ">=18.17.0 <23.0.0",
+  "pnpmVersion": "9.12.2",
+  "ensureConsistentVersions": true,
+  "projects": [
+    {
+      "packageName": "@r8-rate/r8-frontend",
+      "projectFolder": "apps/r8-frontend"
+    },
+    {
+      "packageName": "@r8-rate/r8-indexer",
+      "projectFolder": "apps/r8-indexer"
+    },
+    {
+      "packageName": "@r8-rate/r8-contracts",
+      "projectFolder": "apps/r8-contracts"
+    },
+    {
+      "packageName": "@r8-rate/r8-whitepaper",
+      "projectFolder": "apps/r8-whitepaper"
+    }
+  ]
+}
+
+
