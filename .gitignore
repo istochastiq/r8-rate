@@ -26,6 +26,8 @@ scripts/upload-kols.js
 
 # Lockfiles at repo root (Rush manages lockfile under common/config/rush)
 pnpm-lock.yaml
+# allow frontend lockfile for stable Vercel SWC deps
+!apps/r8-frontend/pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
