@@ -2,6 +2,8 @@
 .DS_Store
 Thumbs.db
 
+KOLs
+
 # Node / Logs
 node_modules/
 **/node_modules/
@@ -17,6 +19,10 @@ common/temp/
 !common/temp/.gitkeep
 **/rush-logs/
 **/.rush/
+
+# Local assets (not to commit)
+KOLs/
+scripts/upload-kols.js
 
 # Lockfiles at repo root (Rush manages lockfile under common/config/rush)
 pnpm-lock.yaml
@@ -60,3 +66,4 @@ apps/r8-contracts/lib/
 .cursor/
 
 
+.vercel

@@ -10,10 +10,12 @@
     "build": "node -e \"console.log('noop build')\"",
     "dev": "node src/index.js",
     "start": "node src/index.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "upload:kols": "node ../../scripts/upload-kols.js"
   },
   "dependencies": {
-    "viem": "2.21.3"
+    "viem": "2.21.3",
+    "@supabase/supabase-js": "2.57.2"
   },
   "devDependencies": {
     "rimraf": "5.0.10"
