@@ -12,19 +12,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@privy-io/react-auth": "^3.0.1",
+    "viem": "2.21.3",
+    "@vercel/speed-insights": "^1.2.0",
     "next": "15.5.4",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "@supabase/supabase-js": "2.57.2",
-    "@privy-io/react-auth": "^2.0.0"
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.13",
-    "postcss": "^8.4.47",
-    "autoprefixer": "^10.4.20"
-  },
-  "optionalDependencies": {
-    "viem": "^2.21.3"
+    "autoprefixer": "^10.4.20",
+    "tailwindcss": "^3.4.14"
   },
   "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }

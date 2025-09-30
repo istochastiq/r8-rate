@@ -1,37 +1,64 @@
 'use client';
-import { useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import Link from 'next/link';
-import UserMenu from './UserMenu';
 
-function HeaderContent() {
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useMemo } from 'react';
+import { buildBreadcrumbs } from '../lib/breadcrumbs';
+import { useHeader } from './HeaderProvider';
+import LoginButton from './LoginButton';
+import UserMenu from './UserMenu';
+import { usePrivy } from '@privy-io/react-auth';
+
+export default function GlobalHeader() {
+  const pathname = usePathname();
+  const { state } = useHeader();
+  const { ready, authenticated } = usePrivy();
+
+  const baseCrumbs = useMemo(() => buildBreadcrumbs(pathname), [pathname]);
+
+  const crumbs = useMemo(() => {
+    if (state?.breadcrumbOverrides && state.breadcrumbOverrides.length > 0) {
+      // Merge: prefer overrides; fallback to base when override missing
+      const map = new Map();
+      for (const c of baseCrumbs) map.set(c.href, c);
+      for (const c of state.breadcrumbOverrides) map.set(c.href, c);
+      return Array.from(map.values());
+    }
+    return baseCrumbs;
+  }, [baseCrumbs, state?.breadcrumbOverrides]);
+
+  const title = state?.title || (crumbs.length > 0 ? crumbs[crumbs.length - 1].label : 'R8-Rate') || 'R8-Rate';
+
   return (
     <header className="border-b border-gray-200">
-      <div className="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="font-semibold">R8‑rate</Link>
-        <nav className="flex items-center gap-4">
-          <Link href="/influencers" className="text-sm text-gray-600 hover:text-gray-900">Influencers</Link>
-          <UserMenu />
-        </nav>
+      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14 items-center justify-between gap-4">
+          <div className="flex items-center gap-4 min-w-0">
+            <Link href="/" className="text-base font-semibold tracking-tight">R8</Link>
+            <div className="hidden sm:block text-gray-300">|</div>
+            <div className="min-w-0">
+              <div className="truncate text-sm font-medium text-gray-900">{title}</div>
+              <nav className="hidden sm:flex items-center gap-1 text-xs text-gray-500">
+                {crumbs.map((c, idx) => (
+                  <span key={c.href} className="inline-flex items-center">
+                    {idx > 0 && <span className="mx-1 text-gray-300">/</span>}
+                    {idx < crumbs.length - 1 ? (
+                      <Link href={c.href} className="hover:text-gray-700">{c.label}</Link>
+                    ) : (
+                      <span aria-current="page">{c.label}</span>
+                    )}
+                  </span>
+                ))}
+              </nav>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {ready && authenticated ? <UserMenu /> : <LoginButton />}
+          </div>
+        </div>
       </div>
     </header>
   );
 }
 
-let headerRoot = null;
 
-export default function GlobalHeader() {
-  useEffect(() => {
-    const container = document.getElementById('app-header');
-    if (container && !headerRoot) {
-      headerRoot = createRoot(container);
-      headerRoot.render(<HeaderContent />);
-    }
-    
-    return () => {
-      // Don't unmount on component cleanup - keep header alive
-    };
-  }, []);
-
-  return null; // This component renders nothing in the React tree
-}
