@@ -3,7 +3,7 @@ node_modules
 .vercel
 *.log
 *.lock
-pnpm-lock.yaml
+!pnpm-lock.yaml
 apps/*/node_modules
 apps/r8-indexer
 apps/r8-contracts
