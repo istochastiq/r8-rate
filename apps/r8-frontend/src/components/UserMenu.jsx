@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePrivy, useFundWallet, useWallets, useSendTransaction, getEmbeddedConnectedWallet } from '@privy-io/react-auth';
 import { createPublicClient, http, formatEther, parseEther, isAddress, getAddress as toChecksum } from 'viem';
 import { base } from 'viem/chains';
+import Link from 'next/link';
 
 function classNames(...args) {
   return args.filter(Boolean).join(' ');
@@ -242,7 +243,7 @@ export default function UserMenu() {
 
           {/* Links section */}
           <div className="py-1">
-            <a href="/activity" className="block px-3 py-2 text-left text-sm text-gray-800 hover:bg-gray-50">Activity</a>
+            <Link href="/activity" onClick={() => setOpen(false)} className="block px-3 py-2 text-left text-sm text-gray-800 hover:bg-gray-50">Activity</Link>
             <button className="block w-full px-3 py-2 text-left text-sm text-gray-800 hover:bg-gray-50">My positions</button>
             <button className="block w-full px-3 py-2 text-left text-sm text-gray-800 hover:bg-gray-50">Notifications</button>
           </div>

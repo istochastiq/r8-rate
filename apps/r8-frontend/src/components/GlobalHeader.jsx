@@ -4,30 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 import { buildBreadcrumbs } from '../lib/breadcrumbs';
-import { useHeader } from './HeaderProvider';
 import LoginButton from './LoginButton';
 import UserMenu from './UserMenu';
 import { usePrivy } from '@privy-io/react-auth';
 
 export default function GlobalHeader() {
   const pathname = usePathname();
-  const { state } = useHeader();
   const { ready, authenticated } = usePrivy();
 
-  const baseCrumbs = useMemo(() => buildBreadcrumbs(pathname), [pathname]);
-
-  const crumbs = useMemo(() => {
-    if (state?.breadcrumbOverrides && state.breadcrumbOverrides.length > 0) {
-      // Merge: prefer overrides; fallback to base when override missing
-      const map = new Map();
-      for (const c of baseCrumbs) map.set(c.href, c);
-      for (const c of state.breadcrumbOverrides) map.set(c.href, c);
-      return Array.from(map.values());
-    }
-    return baseCrumbs;
-  }, [baseCrumbs, state?.breadcrumbOverrides]);
-
-  const title = state?.title || (crumbs.length > 0 ? crumbs[crumbs.length - 1].label : 'R8-Rate') || 'R8-Rate';
+  const crumbs = useMemo(() => buildBreadcrumbs(pathname), [pathname]);
+  const title = crumbs.length > 0 ? crumbs[crumbs.length - 1].label : 'R8-Rate';
 
   return (
     <header className="border-b border-gray-200">

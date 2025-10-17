@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { useEffect, useState } from 'react';
+import { usePrivy } from '@privy-io/react-auth';
 
 function formatTs(ms) {
   try { return new Date(ms).toLocaleString(); } catch { return ''; }
@@ -18,7 +18,6 @@ function Spinner() {
 
 export default function ActivityPage() {
   const { ready, user } = usePrivy();
-  const { wallets } = useWallets();
   const [items, setItems] = useState([]);
   const [cursor, setCursor] = useState();
   const [loading, setLoading] = useState(true);
