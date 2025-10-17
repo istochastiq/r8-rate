@@ -12,7 +12,7 @@ export default function ActivityPage() {
   const { wallets } = useWallets();
   const [items, setItems] = useState([]);
   const [cursor, setCursor] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const userId = user?.id.split(':')[2];
@@ -38,7 +38,15 @@ export default function ActivityPage() {
     }
   }
 
-  useEffect(() => { loadPage(); }, [userId, ready]);
+  useEffect(() => {
+    if (ready) {
+      if (userId) {
+        loadPage();
+      } else {
+        setLoading(false);
+      }
+    }
+  }, [userId, ready]);
 
   return (
     <main className="space-y-4">
