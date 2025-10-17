@@ -1,4 +1,10 @@
 {
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm run build",
+  "framework": "nextjs"
+}
+
+{
   "buildCommand": "pnpm run build",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile && cd apps/r8-frontend",
   "framework": "nextjs"
