@@ -44,6 +44,7 @@ export default function ActivityPage() {
         loadPage();
       } else {
         setLoading(false);
+        setItems([]);
       }
     }
   }, [userId, ready]);
