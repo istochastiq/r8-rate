@@ -1,0 +1,14 @@
+node_modules
+.git
+.vercel
+*.log
+*.lock
+pnpm-lock.yaml
+apps/*/node_modules
+apps/r8-indexer
+apps/r8-contracts
+apps/r8-whitepaper
+common/temp
+wip
+spec/*.pdf
+

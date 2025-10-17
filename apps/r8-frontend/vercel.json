@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd ../.. && npx -y @microsoft/rush build --to @r8-rate/r8-frontend",
+  "installCommand": "cd ../.. && npx -y @microsoft/rush install",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- ./apps/r8-frontend ./common/config/rush",
+  "framework": "nextjs"
+}
+
